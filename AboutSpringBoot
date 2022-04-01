@@ -1,0 +1,103 @@
+Annotations:
+https://lightrun.com/java/the-complete-list-of-spring-boot-annotations-you-must-know/
+https://bitbytesoft.com/modern-software-architecture/
+https://dev.to/maddy/spring-boot-architecture-547i
+    Application setup:
+        @SpringBootApplication:
+            Replaces several other key annotations, and is essentially to nearly all Spring Boot applications.
+
+        @Configuration:
+            Superceded by @SpringBootApplication, this annotation aenables Java configuration and lets you use Spring Beans in the class. A spring bean is an object
+        that forms the backbone of your application and is managed by the Spring Framework itself; it's an object that is instantiated, assembled, and managed by the
+        Spring IoC container. Spring Beans make up components of your application.
+
+        @ComponentScan:
+            Superceded by @SpringBootApplication, this annotation means components you create can be discovered by the Spring Framework. All application components
+        will be registered as Spring Beans automatically: [@Service, @Component, @Repository, @Controller, etc.].
+
+        @EnableAutoConfiguration
+            Superceded by @SpringBootApplication, this annotation makes many application decisions for you. Can be overriden if you want to make your own choices,
+        or can be disabled completely.
+
+    Request responses:
+        @GetMapping:
+            Combines with @RestController to return a response to requests from the url.
+            Method signature: @GetMapping("/{id}", produces = "application/json")
+
+        @RequestMapping:
+            Combines with @Controller to create a controller class that returns responses to simple requests
+
+        @RequestParam:
+            Allows you to send parameters in a GET request and use those parameters in your Java program / class.
+
+        @ResponseBody:
+            Binds a method return value to the web response body. Converts the return value to an HTTP response body, based on the content-type set in the request
+        HTTP header.
+
+        method = RequestMethod.{[GET, POST, PUT, PATCH, DELETE]}. This attaches the HTTP request method to send with a request.
+
+        produces = {"application/{data-type}"}. This attaches the content-type to get back when receiving a response.
+
+
+    Component type:
+        @RestController:
+            This is used to create RESTful web services using Spring MVC. Applied to a lass to mark it as a request handler.
+
+        @Component:
+            Components of your application defined with these are automatically registered as Spring Beans, providing dependency injection.
+
+        @Service
+            This specifies you intend to use this class as part of your service layer. It doesn't actually implement anything, however.
+
+        @Repository
+            This marks a class as part of your data layer. The data layer is used for handling storage, retrieval of data, and searching through data sets. This is
+        especially useful for targeting your tests and generating the right exceptions.
+
+        @Controller
+            This marks a class as a controller. Implicitly, a class marked with this is a specialized component in MVC architecture.
+
+    Testing:
+        @SpringBootTest
+            This lets test classes (like JUnit 5) use Spring Boot specific features. If you're testing the entire application together, use this annotation. Other test
+        annotations like @WebMvcTest and @DataJpaTest are better to use if you're looking at those specific areas.
+
+
+
+Spring Boot architecture:
+    Many modules of Spring Boot include: Spring MVC, Spring JDBC, Spring AOP, Spring ORM, and Spring Test. The core feature, however, is Dependency Injection.
+
+    Spring boot has 4 layers:
+        Presentation layer
+        Business layer
+        Persistence layer
+        Database layer
+
+        Presentation layer:
+            Authentication, Converting JSON into an object (vice versa), Handling HTTP requests, and transferring authentication to the business layer.
+        The presentation layer is equivalent of the controller class. This class handles all of the incoming REST API requests, such as GET, POST, PUT, DELETE, and
+        PATCH from any client.
+
+
+        Business layer:
+            This layer is equivalent to the Service class. In this layer, the tasks that the software needs to perform are specified here. For example, if validation
+        rules must be applied to incoming or outgoing data, that would be defined here using a separate Validation class. This layer communicates with both the
+        presentation and persistence layer.
+
+
+        Persistence layer:
+            This layer contains logic on storing data and fetching objects and translating them into database rows/data and vice versa. This layer is the equivalent
+        of the Repository interface. Database queries are written inside this interface. The persistence is the only layer that communicates with the business layer and
+        the database layer.
+
+
+        Database layer:
+            This layer is solely responsible for performing database operations (mainly CRUD operations). This layer is simply the actual database that your application
+        uses.
+
+
+        Spring Boot workflow:
+            1. The Client makes an HTTP request.
+            2. The Controller classes receives the HTTP request.
+            3. The Controller understands what type of request will process, and then processes that request.
+            4. If required, the service class is called to do validation/other transformations on the data.
+            5. A page is returned if everything goes well.
